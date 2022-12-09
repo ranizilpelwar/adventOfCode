@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+  <p>Select a file:</p>
+  <input type="file" onchange="loadFile(this.files[0])">
+  <script>
+    async function loadFile(file) {
+      let text = await file.text();
+      let totals = getTotals(text)
+      console.log('original text:');
+      console.log(text);
+      console.log('totals', totals);
+      console.log('highest total: ', getHighestTotal(totals));
+      const topThree = getTopThree(totals);
+      console.log('top three:', topThree);
+      console.log('top three:', getTopThreeTotal(topThree)); 
+    }
+
+    function getTotals(text) {
+      const array = text.split(/\r?\n/);
+      console.log(array);
+      const acc = [];
+      let sum = 0;
+      array.forEach(element => {
+        if (element) {
+          sum += +element
+        } else {
+          acc.push(sum);
+          sum = 0;
+        }
+      });
+      return acc;
+    }
+
+    function getHighestTotal(array) {
+      return Math.max(...array);
+    }
+
+    function getTopThree(array) {
+      const result = [];
+      for (let i = 0; i < 3; i++) {
+        const top = Math.max(...array);
+        result.push(top);
+        const index = array.indexOf(top);
+        array[index] = 0;
+      }
+      return result;
+    }
+
+    function getTopThreeTotal(array) {
+      return array.reduce((a,b) => a+b);
+    }
+  </script>
+</body>
+
+</html>
