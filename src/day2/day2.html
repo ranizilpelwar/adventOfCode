@@ -7,28 +7,17 @@
   <script>
     async function loadFile(file) {
       let text = await file.text();
-      let totals = getTotals(text)
-      console.log('original text:');
-      console.log(text);
-      console.log('totals', totals);
-      console.log('highest total: ', getHighestTotal(totals));
-      const topThree = getTopThree(totals);
-      console.log('top three:', topThree);
-      console.log('top three:', getTopThreeTotal(topThree)); 
+      let roundsArray = getRounds(text);
+      console.log('played rounds:', roundsArray);
     }
 
-    function getTotals(text) {
-      const array = text.split(/\r?\n/);
-      console.log(array);
+    function getRounds(text) {
+      const array = text.split(/\r?\n/);//A Y
       const acc = [];
-      let sum = 0;
-      array.forEach(element => {
-        if (element) {
-          sum += +element
-        } else {
-          acc.push(sum);
-          sum = 0;
-        }
+      array.forEach(item => {
+        const subArray = item.split(" ");
+        console.log('subArray', subArray);
+        subArray.length > 0 && acc.push(subArray);
       });
       return acc;
     }

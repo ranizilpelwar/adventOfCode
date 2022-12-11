@@ -1,0 +1,29 @@
+{
+  "name": "adventOfCode",
+  "version": "1.0.0",
+  "description": "Practice problems https://adventofcode.com",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ranizilpelwar/adventOfCode.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ranizilpelwar/adventOfCode/issues"
+  },
+  "homepage": "https://github.com/ranizilpelwar/adventOfCode#readme",
+  "devDependencies": {
+    "jasmine": "^4.5.0"
+  },
+  "dependencies": {
+    "brew": "0.0.8",
+    "install": "^0.13.0",
+    "node": "^19.2.0"
+  }
+}
