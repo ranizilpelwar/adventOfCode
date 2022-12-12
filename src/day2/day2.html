@@ -7,39 +7,71 @@
   <script>
     async function loadFile(file) {
       let text = await file.text();
-      let roundsArray = getRounds(text);
-      console.log('played rounds:', roundsArray);
+      let roundsArray = convert(text);
+      console.log('converted:', roundsArray);
+      console.log('totalScore', getTotalScore(roundsArray));
     }
+    function getValue(choice) {
+    let result = 0;
+    switch (choice)  { 
+      case "X":
+        result = 1;
+        break;
+      case "Y":
+        result = 2;
+        break;
+      case "Z":
+        result = 3;
+        break;
+      default: 
+        break;
+    }
+    return result;
+  }
 
-    function getRounds(text) {
-      const array = text.split(/\r?\n/);//A Y
-      const acc = [];
-      array.forEach(item => {
-        const subArray = item.split(" ");
-        console.log('subArray', subArray);
-        subArray.length > 0 && acc.push(subArray);
-      });
-      return acc;
-    }
+  function getOutcomeScore(array) {
+    const combos = [
+      {key: ['A', 'X'], value: 3},
+      {key: ['A', 'Y'], value: 6},
+      {key: ['A', 'Z'], value: 0},
+      {key: ['B', 'X'], value: 0},
+      {key: ['B', 'Y'], value: 3},
+      {key: ['B', 'Z'], value: 6},
+      {key: ['C', 'X'], value: 6},
+      {key: ['C', 'Y'], value: 0},
+      {key: ['C', 'Z'], value: 3},
+    ]
 
-    function getHighestTotal(array) {
-      return Math.max(...array);
+    const match = combos.find(item => item.key[0] === array[0] && item.key[1] === array[1]);
+    if (match) {
+      return match.value;
+    } else {
+      return 0;
     }
+  }
 
-    function getTopThree(array) {
-      const result = [];
-      for (let i = 0; i < 3; i++) {
-        const top = Math.max(...array);
-        result.push(top);
-        const index = array.indexOf(top);
-        array[index] = 0;
-      }
-      return result;
-    }
+  function getRoundScore(array) {
+    return getOutcomeScore(array) + getValue(array[1]);
+  }
 
-    function getTopThreeTotal(array) {
-      return array.reduce((a,b) => a+b);
-    }
+  function getTotalScore(arrayOfArrays) {
+    let sum = 0;
+    arrayOfArrays.forEach(array => {
+      sum += getRoundScore(array);
+    });
+    return sum;
+  }
+
+  function convert(text) {
+    const array = text.split(/\r?\n/);//A Y
+    const acc = [];
+    array.forEach(item => {
+      const subArray = item.split(" ");
+      console.log('subArray', subArray);
+      subArray.length > 1 && acc.push(subArray);
+    });
+    return acc;
+  }
   </script>
 </body>
 
