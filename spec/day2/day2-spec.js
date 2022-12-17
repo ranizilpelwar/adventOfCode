@@ -58,11 +58,12 @@ describe('day2', () => {
 
   describe('convert', () => {
     it("should return correct value", () => {
-      const input = `A Y
-      B X
-      C Z`;
+      const input = 
+`A Y
+B X
+C Z`;
       const expected = [['A', 'Y'], ['B', 'X'], ['C', 'Z']];
-      expect(convert(input)).toBe(expected);
+      expect(convert(input)).toEqual(expected);
     });     
   }); 
 
