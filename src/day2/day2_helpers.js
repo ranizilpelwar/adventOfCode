@@ -87,3 +87,9 @@ function getActualIndex(index) {
   if (index < 0) return 2;
   return index;
 }
+
+export function getUpdatedRoundsWithChoices(roundsArray) {
+  return roundsArray.map((round) => {
+    return [round[0], getRoundChoice(round)];
+  });
+}
