@@ -10,6 +10,8 @@
       let roundsArray = convert(text);
       console.log('converted:', roundsArray);
       console.log('totalScore', getTotalScore(roundsArray));
+      let updatedChoices = getUpdatedRoundsWithChoices(roundsArray);
+      console.log('for day 2 part 2, total score:', getTotalScore(updatedChoices));
     }
     function getValue(choice) {
     let result = 0;
@@ -71,6 +73,34 @@
       subArray.length > 1 && acc.push(subArray);
     });
     return acc;
+  }
+
+  function getRoundChoice(roundArray) {
+    const opponentChoices = ['A', 'B', 'C'];
+    const choices = ['X', 'Y', 'Z'];
+    let index = opponentChoices.indexOf(roundArray[0]);
+    switch (roundArray[1]) {
+      case 'X': //need to lose
+        index--;
+      case 'Y': //need to draw
+        break;
+      case 'Z': //need to win
+        index++;  
+    }
+    const actualIndex = getActualIndex(index);
+    return choices[actualIndex];
+  }
+
+  function getActualIndex(index) {
+    if (index > 2) return 0;
+    if (index < 0) return 2;
+    return index;
+  }
+
+  function getUpdatedRoundsWithChoices(roundsArray) {
+    return roundsArray.map((round) => {
+      return [round[0], getRoundChoice(round)];
+    });
   }
   </script>
 </body>
