@@ -1,4 +1,4 @@
-import { convert, getOutcomeScore, getRoundScore, getTotalScore, getValue } from "../../src/day2/day2_helpers.js";
+import { convert, getOutcomeScore, getRoundChoice, getRoundScore, getTotalScore, getValue } from "../../src/day2/day2_helpers.js";
 
 describe('day2', () => {
   describe('getValue', () => {
@@ -67,4 +67,20 @@ C Z`;
     });     
   }); 
 
+  describe('getRoundChoice', () => {
+    //X need to lose
+    //Y need to draw
+    //Z need to win
+    [
+      {round: ['A', 'Y'], expected: 'X'},
+      {round: ['B', 'X'], expected: 'X'},
+      {round: ['C', 'Z'], expected: 'X'}
+    ].forEach(({round, expected}) => {
+      it(`should return ${expected} selection when round is ${round[0]}, ${round[1]}`, () => {
+        const result = getRoundChoice(round);
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
 });

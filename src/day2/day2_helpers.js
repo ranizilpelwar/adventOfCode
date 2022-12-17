@@ -54,7 +54,6 @@ export function convert(text) {
   const acc = [];
   array.forEach(item => {
     const subArray = item.split(" ");
-    console.log('subArray', subArray);
     subArray.length > 1 && acc.push(subArray);
   });
   return acc;
@@ -65,4 +64,26 @@ export async function loadFile(file) {
   let roundsArray = convert(text);
   console.log('converted:', roundsArray);
   console.log('totalScore', getTotalScore(roundsArray));
+}
+
+export function getRoundChoice(roundArray) {
+  const opponentChoices = ['A', 'B', 'C'];
+  const choices = ['X', 'Y', 'Z'];
+  let index = opponentChoices.indexOf(roundArray[0]);
+  switch (roundArray[1]) {
+    case 'X': //need to lose
+      index--;
+    case 'Y': //need to draw
+      break;
+    case 'Z': //need to win
+      index++;  
+  }
+  const actualIndex = getActualIndex(index);
+  return choices[actualIndex];
+}
+
+function getActualIndex(index) {
+  if (index > 2) return 0;
+  if (index < 0) return 2;
+  return index;
 }
