@@ -7,11 +7,15 @@
   <script>
     async function loadFile(file) {
       let text = await file.text();
+      console.log('text', text);
       let roundsArray = convert(text);
       console.log('converted:', roundsArray);
       let dups = getAllDuplicates(roundsArray);
       console.log('duplicates', dups);
       console.log('sum for day 3 part 1:', getPrioritySum(dups));
+      const arrays = convertSplitByGroups(text);
+      console.log('arrays split by groups', arrays);
+      console.log('sum for day 3 part 2:', sumPrioritiesOfCommonBadges(text));
     }
   function convert(text) {
     const array = text.split(/\r?\n/);//A Y
@@ -66,6 +70,59 @@
     })
     return sum;
   }
+
+function getCommonType(inputArray) {
+  let map = new Map();
+  inputArray.forEach((input) => {
+    let set = new Set();
+    [...input].forEach((char) => {
+      set.add(char);
+    });
+    set.forEach((key) => {
+      if (map.has(key)) {
+        map.set(key, map.get(key) + 1);
+      } else {
+        map.set(key, 1);
+      }
+    });//set
+  });//inputArray.forEach
+  for (let [key, value] of map.entries()) {
+    if (value === 3) return key;
+  }
+  return '';
+}
+
+function convertSplitByGroups(input) {
+  const array = input.split(/\r?\n/);
+  const result = [];
+  let count = 1;
+  let acc = [];
+  array.forEach(item => {
+    if (count === 3) {
+      acc.push(item);
+      result.push(acc);
+      count = 1;
+      acc = [];
+    } else {
+      acc.push(item);
+      count += 1;
+    }
+  });
+
+  return result; 
+}
+
+ function sumPrioritiesOfCommonBadges(input) {
+  const arrays = convertSplitByGroups(input);
+  
+  let sum = 0;
+  arrays.forEach((array) => {
+    const commonType = getCommonType(array);
+    const priority = getPriorityValue(commonType);
+    sum += priority;
+  });
+  return sum;
+}
   </script>
 </body>
 

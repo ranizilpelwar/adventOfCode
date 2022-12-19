@@ -1,4 +1,4 @@
-import { getAllDuplicates, getDuplicates, getPrioritySum, getPriorityValue } from "../../src/day3/day3_helpers.js";
+import { convertSplitByGroups, getAllDuplicates, getCommonType, getDuplicates, getPrioritySum, getPriorityValue, sumPrioritiesOfCommonBadges } from "../../src/day3/day3_helpers.js";
 
 describe('day 3', () => {
   describe('getPriorityValue', () => {
@@ -12,7 +12,8 @@ describe('day 3', () => {
       {input: 'P', expected: 42},
       {input: 'v', expected: 22},
       {input: 't', expected: 20},
-      {input: 's', expected: 19}
+      {input: 's', expected: 19},
+      {input: 'r', expected: 18}
     ].forEach(({input, expected}) => {
       it(`for value ${input} it should return ${expected}`, () => {
         expect(getPriorityValue(input)).toEqual(expected);
@@ -52,5 +53,46 @@ describe('day 3', () => {
 
       expect(getPrioritySum(input)).toEqual(157);
     });
+  });
+});
+
+describe('getCommonType', () => {
+  [
+    {input: ['vJrwpWtwJgWrhcsFMMfFFhFp', 'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL', 'PmmdzqPrVvPwwTWBwg'], expected: 'r'},
+    {input: ['wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn', 'ttgJtRGJQctTZtZT', 'CrZsJsPPZsGzwwsLwLmpwMDw'], expected: 'Z'}
+  ].forEach(({input, expected}) => {
+    it(`should return ${expected} for given input ${JSON.stringify(input)}`, () => {
+      expect(getCommonType(input)).toEqual(expected);
+    });
+  });
+});
+
+describe('convertSplitByGroups', () => {
+  it("should return correct value", () => {
+    const input = 
+`vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw`;
+    const expected = [
+      ['vJrwpWtwJgWrhcsFMMfFFhFp', 'jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL', 'PmmdzqPrVvPwwTWBwg'],
+       ['wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn', 'ttgJtRGJQctTZtZT', 'CrZsJsPPZsGzwwsLwLmpwMDw']
+    ];
+    expect(convertSplitByGroups(input)).toEqual(expected);
+  });     
+}); 
+
+describe('sumPrioritiesOfCommonBadges', () => {
+  it('should return expected sum', () => {
+    const input = 
+`vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw`;
+      expect(sumPrioritiesOfCommonBadges(input)).toEqual(70);
   });
 });
